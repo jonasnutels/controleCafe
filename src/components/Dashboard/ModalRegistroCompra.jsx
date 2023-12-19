@@ -17,7 +17,6 @@ const ModalRegistroCompra = ({ onClose, handleRegistrarCompra }) => {
     observacoes: '',
     email_registros: usuario.email,
   });
-  console.log(usuario.email);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setDadosCompra((prevDados) => ({
@@ -33,8 +32,15 @@ const ModalRegistroCompra = ({ onClose, handleRegistrarCompra }) => {
     onClose();
   };
   const TipoCafeSelect = ({ value, onChange }) => {
-    const tiposCafe = ['Arábica', 'Robusta', 'Liberica', 'Excelsa', 'Outro'];
-
+    const tiposCafe = [
+      '',
+      'Arábica',
+      'Robusta',
+      'Liberica',
+      'Excelsa',
+      'Outro',
+    ];
+    console.log(value);
     return (
       <select
         value={value}
@@ -54,6 +60,7 @@ const ModalRegistroCompra = ({ onClose, handleRegistrarCompra }) => {
 
   const CompradorSelect = ({ value, onChange }) => {
     const nomeComprador = [
+      '',
       'Anderson Bandeira',
       'Jonas Nutels',
       'Adriano Binário',
