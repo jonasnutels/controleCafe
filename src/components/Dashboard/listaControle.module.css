@@ -1,0 +1,87 @@
+.navbar ul {
+  display: flex;
+  gap: 1rem;
+  cursor: pointer;
+}
+
+.navbar {
+  width: 100%;
+  display: flex;
+  align-content: space-between;
+}
+
+h1 {
+  text-align: center;
+  font-size: 3rem;
+}
+
+/* Estilo para a tabela */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+/* Estilo para as células do cabeçalho */
+th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+  padding: 10px;
+  text-align: left;
+  color: black;
+}
+
+/* Estilo para as células dos dados */
+td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  color: black;
+}
+
+/* Estilo para as linhas ímpares */
+tr:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+/* Estilo para as linhas pares */
+tr:nth-child(even) {
+  background-color: #ffffff;
+}
+
+/* Estilo para o container da tabela (opcional) */
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+.tabela {
+  margin: 3rem;
+}
+
+li {
+  background-color: transparent;
+  padding: 0.5rem;
+  border-radius: 8px;
+}
+
+li:hover {
+  background-color: darkblue;
+}
+
+@media screen and (max-width: 767px) {
+  h1 {
+    text-align: center;
+    font-size: 1.5rem;
+  }
+  .navbar {
+    max-width: 50px;
+  }
+  .navbar li {
+    width: 100px;
+    overflow-wrap: break-word;
+  }
+  .tabela {
+    margin: 0;
+    overflow-y: scroll;
+    width: 400px;
+  }
+}

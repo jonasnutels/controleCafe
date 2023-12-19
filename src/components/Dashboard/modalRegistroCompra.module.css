@@ -1,0 +1,62 @@
+/* modalRegistroCompra.module.css */
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Fundo escuro semitransparente */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modalContent {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  width: 400px;
+}
+
+.closeButton {
+  right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+  color: #333;
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.modalContent label {
+  color: black;
+}
+.modalContent input {
+  color: black;
+  width: 300px;
+  border-radius: 10px;
+}
+.modalContent h2 {
+  color: black;
+  font-size: 22px;
+  text-align: center;
+}
+.modalContent h3 {
+  color: black;
+  font-size: 18px;
+}
+
+.modalContent button {
+  margin-top: 2rem;
+}
+
+.selectBox {
+  width: 300px;
+  color: #333;
+  border: 2px solid #333;
+  border-radius: 10px;
+}
+.selectBox option {
+  color: black;
+}
