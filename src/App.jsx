@@ -6,6 +6,7 @@ import Home from './components/Home';
 import LoginPage from './components/Login/LoginPage';
 import ListaControle from './components/Dashboard/listaControle';
 import ProtectedRoute from './Helper/ProtectedRoute';
+import NotFound from './Helper/NotFound copy';
 
 export default function App() {
   return (
@@ -22,6 +23,7 @@ export default function App() {
                 </ProtectedRoute>
               }
             />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </UserStorage>
       </BrowserRouter>
