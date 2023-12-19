@@ -53,7 +53,7 @@ const ModalRegistroCompra = ({ onClose, handleRegistrarCompra }) => {
   };
 
   const CompradorSelect = ({ value, onChange }) => {
-    const tiposCafe = [
+    const nomeComprador = [
       'Anderson Bandeira',
       'Jonas Nutels',
       'Adriano Binário',
@@ -68,13 +68,13 @@ const ModalRegistroCompra = ({ onClose, handleRegistrarCompra }) => {
       <select
         value={value}
         onChange={(e) =>
-          onChange({ target: { name: 'tipoCafe', value: e.target.value } })
+          onChange({ target: { name: 'nomeComprador', value: e.target.value } })
         }
         className={styles.selectBox}
       >
-        {tiposCafe.map((tipo, index) => (
-          <option key={index} value={tipo}>
-            {tipo}
+        {nomeComprador.map((nome, index) => (
+          <option key={index} value={nome}>
+            {nome}
           </option>
         ))}
       </select>
