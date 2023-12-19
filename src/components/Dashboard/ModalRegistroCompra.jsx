@@ -52,6 +52,35 @@ const ModalRegistroCompra = ({ onClose, handleRegistrarCompra }) => {
     );
   };
 
+  const CompradorSelect = ({ value, onChange }) => {
+    const tiposCafe = [
+      'Anderson Bandeira',
+      'Jonas Nutels',
+      'Adriano Binário',
+      'André Alécio',
+      'Edvan Maia',
+      'Manoel Vieira',
+      'Mauro Pereira',
+      'Maycon Souza',
+    ];
+
+    return (
+      <select
+        value={value}
+        onChange={(e) =>
+          onChange({ target: { name: 'tipoCafe', value: e.target.value } })
+        }
+        className={styles.selectBox}
+      >
+        {tiposCafe.map((tipo, index) => (
+          <option key={index} value={tipo}>
+            {tipo}
+          </option>
+        ))}
+      </select>
+    );
+  };
+
   return (
     <div className={styles.modalOverlay}>
       <div className={styles.modalContent}>
@@ -64,12 +93,9 @@ const ModalRegistroCompra = ({ onClose, handleRegistrarCompra }) => {
           {/* Adicione os campos do formulário aqui */}
           <label>
             <h3>Nome do Comprador:</h3>
-            <input
-              type="text"
-              name="nomeComprador"
+            <CompradorSelect
               value={dadosCompra.nomeComprador}
               onChange={handleChange}
-              required
             />
           </label>
           <label>

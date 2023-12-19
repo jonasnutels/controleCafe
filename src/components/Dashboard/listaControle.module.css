@@ -2,12 +2,16 @@
   display: flex;
   gap: 1rem;
   cursor: pointer;
+  align-items: center;
 }
-
-.navbar {
-  width: 100%;
+.navbar li {
+  padding: 0.5rem;
   display: flex;
-  align-content: space-between;
+  align-items: center;
+  border-radius: 8px;
+}
+.navbar {
+  display: flex;
 }
 
 h1 {
@@ -15,14 +19,12 @@ h1 {
   font-size: 3rem;
 }
 
-/* Estilo para a tabela */
 table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
 }
 
-/* Estilo para as células do cabeçalho */
 th {
   background-color: #f2f2f2;
   font-weight: bold;
@@ -31,36 +33,18 @@ th {
   color: black;
 }
 
-/* Estilo para as células dos dados */
 td {
   border: 1px solid #ddd;
-  padding: 10px;
+  padding: 8px;
   color: black;
 }
 
-/* Estilo para as linhas ímpares */
 tr:nth-child(odd) {
   background-color: #f9f9f9;
 }
 
-/* Estilo para as linhas pares */
 tr:nth-child(even) {
   background-color: #ffffff;
-}
-
-/* Estilo para o container da tabela (opcional) */
-.container {
-  max-width: 800px;
-  margin: 0 auto;
-}
-.tabela {
-  margin: 3rem;
-}
-
-li {
-  background-color: transparent;
-  padding: 0.5rem;
-  border-radius: 8px;
 }
 
 li:hover {
@@ -73,11 +57,14 @@ li:hover {
     font-size: 1.5rem;
   }
   .navbar {
-    max-width: 50px;
+    display: flex;
+    flex-direction: column;
   }
+
   .navbar li {
-    width: 100px;
-    overflow-wrap: break-word;
+    max-width: 150px;
+    text-align: justify;
+    white-space: normal;
   }
   .tabela {
     margin: 0;

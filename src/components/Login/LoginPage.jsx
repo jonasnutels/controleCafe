@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import styles from './LoginPage.module.css';
 import React, { useState, useContext, useEffect } from 'react';
 import { UserContext } from '../../userContext';
+import cafeIcon from '../../assets/cafe.svg';
 function LoginPage() {
   const { handleLogin, fetchUserData } = useContext(UserContext);
   const [email, setEmail] = useState('');
@@ -19,7 +20,11 @@ function LoginPage() {
       <h1>Controle de Café - TCE AL</h1>
 
       <div className={styles.loginForm}>
-        <h2>Login</h2>
+        <div className={styles.tituloLogin}>
+          <h2>Login</h2>
+          <img src={cafeIcon} width={60} alt="" />
+        </div>
+
         <form className={styles.formLogin} onSubmit={handleSubmit}>
           <label>
             <h3>E-Mail:</h3>
