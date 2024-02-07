@@ -1,19 +1,17 @@
 import React, { useState, createContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from './authSupabase/__auth';
+import { toast } from 'sonner';
 
 export const UserContext = createContext();
 
 export const UserStorage = ({ children }) => {
   const navigate = useNavigate();
   const [usuario, setUsuario] = useState([]);
+
   const [autenticado, setAutenticado] = useState(false);
   const [lista, setLista] = useState([]);
 
-  async function getLista() {
-    const { data } = await supabase.from('controle_cafe').select();
-    setLista(data);
-  }
   async function handleLogin(email, senha) {
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
@@ -22,24 +20,42 @@ export const UserStorage = ({ children }) => {
       });
 
       if (error) {
-        console.error('Erro ao fazer login:', error.message);
+        toast.error('Usuário ou senha inválido :(');
       } else {
+        toast.success('Logado com sucesso (:');
         setUsuario(data.user);
-        window.localStorage.setItem(
-          'refresh_token',
-          data.session.refresh_token,
-        );
-
-        console.log('Usuário logado com sucesso user:', data);
         setAutenticado(true);
-        // Adicione a lógica de redirecionamento ou manipulação de estado após o login bem-sucedido
-        navigate('/lista');
+        setTimeout(() => {
+          navigate('/lista');
+        }, 1500);
       }
     } catch (error) {
       console.error('Erro ao fazer login:', error.message);
     }
   }
 
+  async function handleAutoLogin() {
+    try {
+      const { data, error } = await supabase.auth.refreshSession();
+
+      if (error) {
+        console.error('Erro ao renovar sessão:', error.message);
+      } else if (data) {
+        setUsuario(data.user);
+        toast.success('Você já está logado ! ');
+        setAutenticado(true);
+        setTimeout(() => {
+          navigate('/lista');
+        }, 1500);
+      }
+    } catch (error) {
+      console.error('Erro ao renovar sessão:', error.message);
+    }
+  }
+  async function getLista() {
+    const { data } = await supabase.from('controle_cafe').select();
+    setLista(data);
+  }
   async function fetchUserData() {
     try {
       const refresh_token = window.localStorage.getItem('refresh_token');
@@ -58,10 +74,13 @@ export const UserStorage = ({ children }) => {
     }
   }
   function handleLogout() {
-    window.localStorage.removeItem('refresh_token');
-    setUsuario(null);
-    setAutenticado(false);
-    navigate('/');
+    toast.info('Saindo ... ');
+    setTimeout(() => {
+      supabase.auth.signOut();
+      setUsuario(null);
+      setAutenticado(false);
+      navigate('/');
+    }, 1500);
   }
 
   async function handleRegistrarCompra(dadosCompra) {
@@ -81,11 +100,13 @@ export const UserStorage = ({ children }) => {
       ]);
 
       if (error) {
-        console.error('Erro ao registrar compra:', error);
+        toast.warning('Preencha os campos obrigatórios');
       } else {
-        console.log('Compra registrada com sucesso:', data);
-        // Atualize a lista após o registro bem-sucedido
+        toast.success('Salvo !');
         getLista();
+        setTimeout(() => {
+          navigate('/lista');
+        }, 1500);
       }
     } catch (error) {
       console.error('Erro ao registrar compra:', error);
@@ -102,6 +123,7 @@ export const UserStorage = ({ children }) => {
         getLista,
         lista,
         handleRegistrarCompra,
+        handleAutoLogin,
       }}
     >
       {children}

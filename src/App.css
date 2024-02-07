@@ -1,49 +1,31 @@
-@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital@1&family=Montserrat:wght@400;500&family=Pacifico&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredericka+the+Great&family=Merriweather:ital@1&family=Montserrat:wght@400;500&family=Pacifico&family=Poppins&display=swap');
 :root {
-  background-image: url(./assets/hero-bg.webp);
-  background-size: cover;
-  background-repeat: no-repeat;
-  min-height: 100%;
-  color: white;
-  padding-left: 2rem;
-  padding-right: 2rem;
+  background-color: rgb(226 232 240);
 }
 * {
-  text-decoration: none;
-  color: white;
-
-  font-size: 18px;
-  font-family: 'Merriweather', serif;
+  font-family: 'Poppins', sans-serif;
 }
+ul li {
+  list-style-type: none;
+}
+
 a {
-  color: #0473a1;
-}
-ul {
-  list-style: none;
-}
-input {
-  background: transparent;
-  width: 100%;
-  padding: 10px;
+  text-decoration: none;
+  color: inherit;
+  background-color: transparent;
 }
 
-button {
-  background-color: #4caf50;
-  color: white;
-  padding: 10px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  width: 100%;
+body {
+  margin: 0 auto;
 }
-
-button:hover {
-  background-color: #45a049;
+.content {
+  height: auto;
+  min-height: 85.5vh;
 }
 
 @media screen and (max-width: 767px) {
-  :root {
-    padding-left: 0;
-    padding-right: 0;
+  .content {
+    min-height: 100vh;
+    margin-bottom: 2rem;
   }
 }
