@@ -112,6 +112,7 @@ export const UserStorage = ({ children }) => {
       console.error('Erro ao registrar compra:', error);
     }
   }
+
   return (
     <UserContext.Provider
       value={{

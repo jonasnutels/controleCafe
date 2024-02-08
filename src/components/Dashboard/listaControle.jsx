@@ -1,11 +1,23 @@
 import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import styles from './listaControle.module.css';
-import { Typography } from '@mui/material';
+import {
+  Typography,
+  Card,
+  CardContent,
+  CardActions,
+  Button,
+} from '@mui/material';
 import { UserContext } from '../../userContext';
+import { format, parseISO } from 'date-fns';
 
 const columns = [
-  { field: 'id', headerName: 'ID', width: 70 },
+  {
+    field: 'id',
+    headerName: 'ID',
+    width: 70,
+    headerClassName: 'super-app-theme--header',
+  },
   { field: 'nome_comprador', headerName: 'Nome', width: 250 },
 
   { field: 'tipo_cafe', headerName: 'Tipo do Café', width: 150 },
@@ -28,8 +40,38 @@ export default function ListaControle() {
   React.useEffect(() => {
     getLista();
   }, []);
+  const compraMaisRecente =
+    lista.length > 0
+      ? [...lista].sort(
+          (a, b) => new Date(b.data_compra) - new Date(a.data_compra),
+        )[0]
+      : null;
+
   return (
     <div className={styles.tableCafe}>
+      <Card sx={{ width: { xs: 200, md: 400 }, height: 230, marginBottom: 5 }}>
+        <CardContent>
+          <Typography variant="h6" gutterBottom fontWeight={600}>
+            Último comprador:
+          </Typography>
+          <Typography variant="h7" gutterBottom>
+            {compraMaisRecente && (
+              <>
+                <p>Nome: {compraMaisRecente.nome_comprador}</p>
+                <p>
+                  Data:{' '}
+                  {format(
+                    parseISO(compraMaisRecente.data_compra),
+                    'dd/MM/yyyy',
+                  )}
+                </p>
+                <p>Quantidade: {compraMaisRecente.quantidade_kg}</p>
+              </>
+            )}
+          </Typography>
+        </CardContent>
+      </Card>
+
       <Typography variant="h4" component="h4">
         Últimas compras
       </Typography>

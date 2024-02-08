@@ -7,6 +7,7 @@ import {
   MenuItem,
 } from '@mui/material';
 import { UserContext } from '../../userContext';
+
 const RegistroCompra = () => {
   const { handleRegistrarCompra, usuario } = useContext(UserContext);
   const [dadosCompra, setDadosCompra] = useState({
@@ -31,8 +32,6 @@ const RegistroCompra = () => {
     e.preventDefault();
     await handleRegistrarCompra(dadosCompra);
   };
-
-  console.log(usuario);
 
   return (
     <Container maxWidth="sm">
