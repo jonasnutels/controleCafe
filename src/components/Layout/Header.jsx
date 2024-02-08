@@ -109,12 +109,25 @@ function Header() {
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
               <Button
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                sx={{
+                  my: 2,
+                  color: 'white',
+                  display: 'block',
+                  fontWeight: '600',
+                }}
               >
                 Olá, {usuario.email.split('@')[0]}
               </Button>
               <MenuItem onClick={handleCloseNavMenu}>
-                <Typography textAlign="center" fontWeight={600}>
+                <Typography
+                  textAlign="center"
+                  fontWeight={600}
+                  style={{
+                    background: 'rgb(96 165 250)',
+                    padding: '12px',
+                    borderRadius: '10px',
+                  }}
+                >
                   <Link to={'/registrar-compra'}>Registrar Compra</Link>
                 </Typography>
               </MenuItem>

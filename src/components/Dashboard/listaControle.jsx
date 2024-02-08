@@ -1,5 +1,9 @@
 import * as React from 'react';
-import { DataGrid } from '@mui/x-data-grid';
+import {
+  DataGrid,
+  GridToolbarContainer,
+  GridToolbarExport,
+} from '@mui/x-data-grid';
 import styles from './listaControle.module.css';
 import {
   Typography,
@@ -7,6 +11,8 @@ import {
   CardContent,
   CardActions,
   Button,
+  ThemeProvider,
+  createTheme,
 } from '@mui/material';
 import { UserContext } from '../../userContext';
 import { format, parseISO } from 'date-fns';
@@ -33,7 +39,7 @@ const columns = [
   {
     field: 'registrado_em',
     headerName: 'Data do Registro',
-    width: 150,
+    width: 162,
     renderCell: (params) => {
       const dataFormatada = format(new Date(params.value), 'dd/MM/yyyy');
       return <span>{dataFormatada}</span>;
@@ -42,7 +48,7 @@ const columns = [
   {
     field: 'data_compra',
     headerName: 'Data da Compra',
-    width: 150,
+    width: 162,
     renderCell: (params) => {
       const dataFormatada = format(new Date(params.value), 'dd/MM/yyyy');
       return <span>{dataFormatada}</span>;
@@ -51,7 +57,7 @@ const columns = [
   {
     field: 'email_registros',
     headerName: 'Quem Registrou',
-    width: 150,
+    width: 200,
     renderCell: (params) => {
       // Separando o e-mail pelo caractere '@' e pegando a parte antes do '@'
       const emailUsuario = params.value.split('@')[0];
@@ -71,6 +77,26 @@ export default function ListaControle() {
         )[0]
       : null;
 
+  const theme = createTheme({
+    components: {
+      MuiDataGrid: {
+        styleOverrides: {
+          columnHeader: {
+            backgroundColor: 'rgb(129 140 248)', // Cor do cabeçalho
+            color: 'white',
+            fontSize: '18px',
+          },
+        },
+      },
+    },
+  });
+  function CustomToolbar() {
+    return (
+      <GridToolbarContainer>
+        <GridToolbarExport />
+      </GridToolbarContainer>
+    );
+  }
   return (
     <div className={styles.tableCafe}>
       <Card sx={{ width: { xs: 200, md: 400 }, height: 230, marginBottom: 5 }}>
@@ -99,17 +125,21 @@ export default function ListaControle() {
       <Typography variant="h4" component="h4">
         Últimas compras
       </Typography>
-      <DataGrid
-        rows={lista}
-        columns={columns}
-        initialState={{
-          pagination: {
-            paginationModel: { page: 0, pageSize: 10 },
-          },
-        }}
-        pageSizeOptions={[5, 10, 20]}
-        checkboxSelection
-      />
+      <ThemeProvider theme={theme}>
+        <DataGrid
+          rows={lista}
+          columns={columns}
+          initialState={{
+            pagination: {
+              paginationModel: { page: 0, pageSize: 10 },
+            },
+          }}
+          pageSizeOptions={[5, 10, 20]}
+          slots={{
+            toolbar: CustomToolbar,
+          }}
+        />
+      </ThemeProvider>
     </div>
   );
 }
