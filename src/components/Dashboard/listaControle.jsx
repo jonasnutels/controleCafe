@@ -30,11 +30,35 @@ const columns = [
   },
   { field: 'fornecedor', headerName: 'Marca', width: 150 },
   { field: 'observacoes', headerName: 'Observações', width: 150 },
-  { field: 'registrado_em', headerName: 'Data do Registro', width: 150 },
-  { field: 'data_compra', headerName: 'Data da Compra', width: 150 },
-  { field: 'email_registros', headerName: 'Quem Registrou', width: 150 },
+  {
+    field: 'registrado_em',
+    headerName: 'Data do Registro',
+    width: 150,
+    renderCell: (params) => {
+      const dataFormatada = format(new Date(params.value), 'dd/MM/yyyy');
+      return <span>{dataFormatada}</span>;
+    },
+  },
+  {
+    field: 'data_compra',
+    headerName: 'Data da Compra',
+    width: 150,
+    renderCell: (params) => {
+      const dataFormatada = format(new Date(params.value), 'dd/MM/yyyy');
+      return <span>{dataFormatada}</span>;
+    },
+  },
+  {
+    field: 'email_registros',
+    headerName: 'Quem Registrou',
+    width: 150,
+    renderCell: (params) => {
+      // Separando o e-mail pelo caractere '@' e pegando a parte antes do '@'
+      const emailUsuario = params.value.split('@')[0];
+      return <span>{emailUsuario}</span>;
+    },
+  },
 ];
-
 export default function ListaControle() {
   const { lista, getLista } = React.useContext(UserContext);
   React.useEffect(() => {

@@ -21,7 +21,6 @@ function Header() {
   const { autenticado, handleLogout, usuario } = React.useContext(UserContext);
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const pages = ['Products', 'Pricing', 'Blog'];
   const settings = [
     {
       nome: 'Mudar Senha',
@@ -67,67 +66,68 @@ function Header() {
             Café
           </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: 'block', md: 'none' },
-              }}
-            >
-              {autenticado && (
+          {autenticado && (
+            <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleOpenNavMenu}
+                color="inherit"
+              >
+                <MenuIcon />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorElNav}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'left',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'left',
+                }}
+                open={Boolean(anchorElNav)}
+                onClose={handleCloseNavMenu}
+                sx={{
+                  display: { xs: 'block', md: 'none' },
+                }}
+              >
                 <MenuItem onClick={handleCloseNavMenu}>
                   <Link to={'/registrar-compra'}>
                     <Typography textAlign="center">Registrar Compra</Typography>
                   </Link>
                 </MenuItem>
-              )}
-            </Menu>
-          </Box>
+              </Menu>
+            </Box>
+          )}
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {autenticado && (
+          {autenticado && (
+            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
               <Button
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                Olá, {usuario.email}
+                Olá, {usuario.email.split('@')[0]}
               </Button>
-            )}
-            <MenuItem onClick={handleCloseNavMenu}>
-              {autenticado && (
+              <MenuItem onClick={handleCloseNavMenu}>
                 <Typography textAlign="center" fontWeight={600}>
                   <Link to={'/registrar-compra'}>Registrar Compra</Link>
                 </Typography>
-              )}
-            </MenuItem>
-          </Box>
+              </MenuItem>
+            </Box>
+          )}
+
           {autenticado && (
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                  <Avatar alt="Remy Sharp" src="">
+                    {usuario.email.charAt(0).toUpperCase()}
+                  </Avatar>
                 </IconButton>
               </Tooltip>
               <Menu
