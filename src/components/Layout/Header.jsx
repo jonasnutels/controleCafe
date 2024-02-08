@@ -96,11 +96,13 @@ function Header() {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              <MenuItem onClick={handleCloseNavMenu}>
-                <Link to={'/registrar-compra'}>
-                  <Typography textAlign="center">Registrar Compra</Typography>
-                </Link>
-              </MenuItem>
+              {autenticado && (
+                <MenuItem onClick={handleCloseNavMenu}>
+                  <Link to={'/registrar-compra'}>
+                    <Typography textAlign="center">Registrar Compra</Typography>
+                  </Link>
+                </MenuItem>
+              )}
             </Menu>
           </Box>
 
@@ -114,9 +116,11 @@ function Header() {
               </Button>
             )}
             <MenuItem onClick={handleCloseNavMenu}>
-              <Typography textAlign="center" fontWeight={600}>
-                <Link to={'/registrar-compra'}>Registrar Compra</Link>
-              </Typography>
+              {autenticado && (
+                <Typography textAlign="center" fontWeight={600}>
+                  <Link to={'/registrar-compra'}>Registrar Compra</Link>
+                </Typography>
+              )}
             </MenuItem>
           </Box>
           {autenticado && (
