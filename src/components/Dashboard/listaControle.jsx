@@ -16,7 +16,8 @@ import {
 } from '@mui/material';
 import { UserContext } from '../../userContext';
 import { format, parseISO } from 'date-fns';
-
+import { formatDistanceToNow } from 'date-fns';
+import ptBR from 'date-fns/locale/pt-BR';
 const columns = [
   {
     field: 'id',
@@ -101,6 +102,12 @@ export default function ListaControle() {
     <div className={styles.tableCafe}>
       <Card sx={{ width: { xs: 200, md: 400 }, height: 230, marginBottom: 5 }}>
         <CardContent>
+          {compraMaisRecente
+            ? formatDistanceToNow(compraMaisRecente.data_compra, {
+                locale: ptBR,
+                addSuffix: true,
+              })
+            : null}
           <Typography variant="h6" gutterBottom fontWeight={600}>
             Último comprador:
           </Typography>
