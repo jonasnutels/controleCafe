@@ -100,7 +100,7 @@ export default function ListaControle() {
   }
   return (
     <div className={styles.tableCafe}>
-      <Card sx={{ width: { xs: 200, md: 400 }, height: 230, marginBottom: 5 }}>
+      <Card sx={{ width: { xs: 200, md: 400 }, height: 'auto', marginBottom: 5 }}>
         <CardContent>
           {compraMaisRecente
             ? formatDistanceToNow(compraMaisRecente.data_compra, {
