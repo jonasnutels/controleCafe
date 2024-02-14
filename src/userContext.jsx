@@ -82,6 +82,21 @@ export const UserStorage = ({ children }) => {
       navigate('/');
     }, 1500);
   }
+  async function cadastrarComEmail(email, senha) {
+    if (!email || !senha) {
+      toast.warning('Preencha dos campos ');
+    } else {
+      const { data, error } = await supabase.auth.signUp({
+        email: email,
+        password: senha,
+        options: {
+          emailRedirectTo: 'https://controle-cafe.vercel.app/',
+        },
+      });
+      if (error) toast.error(error.message);
+      if (data.user) toast.success('Cadastrado com sucesso!');
+    }
+  }
 
   async function handleRegistrarCompra(dadosCompra) {
     try {
@@ -125,6 +140,7 @@ export const UserStorage = ({ children }) => {
         lista,
         handleRegistrarCompra,
         handleAutoLogin,
+        cadastrarComEmail,
       }}
     >
       {children}

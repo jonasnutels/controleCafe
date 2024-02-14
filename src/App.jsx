@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { UserStorage } from './userContext';
 import './App.css';
 import Home from './components/Home';
-
+import Cadastro from './components/Pages/Cadastro';
 import ListaControle from './components/Dashboard/listaControle';
 import ProtectedRoute from './Helper/ProtectedRoute';
 import NotFound from './Helper/NotFound';
@@ -21,6 +21,7 @@ export default function App() {
             <div className="content">
               <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="/cadastrar" element={<Cadastro />} />
                 <Route
                   path="lista"
                   element={

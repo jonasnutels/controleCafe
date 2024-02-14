@@ -1,56 +1,35 @@
-import React, { useState, useContext, useEffect } from 'react';
-import astro from '../assets/astronauta.png';
-import styles from './Home.module.css';
-import { UserContext } from '../userContext';
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Button from '@mui/material/Button';
-import Checkbox from '@mui/material/Checkbox';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import { toast } from 'sonner';
-import CoffeeIcon from '@mui/icons-material/Coffee';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
-
-function Home() {
-  const { handleLogin, handleAutoLogin } = useContext(UserContext);
-  useEffect(() => {
-    handleAutoLogin();
-  }, []);
+import { Box, TextField, FormGroup, Button } from '@mui/material';
+import styles from './Cadastro.module.css';
+import CoffeeIcon from '@mui/icons-material/Coffee';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import { Checkbox } from '@mui/material';
+import { UserContext } from '../../userContext';
+import { toast } from 'sonner';
+function Cadastro() {
+  const { cadastrarComEmail } = useContext(UserContext);
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
+  const [senhaConfirm, setSenhaConfirm] = useState('');
   function handleSubmit(e) {
     e.preventDefault();
-    function validarEntrada(email, senha) {
-      if (!email.length || !senha.length) {
-        toast.warning(
-          'Os campos de email e senha devem estar preenchidos para efetuar o login (;',
-        );
-        return false;
-      }
-      if (senha.length < 6) {
-        toast.warning('A Senha tem no mínimo 6 caracteres');
-        return false;
-      }
-      return true;
-    }
-
-    if (validarEntrada(email, senha)) {
-      handleLogin(email, senha);
+    if (senha === senhaConfirm) {
+      cadastrarComEmail(email, senha);
+    } else {
+      toast.error('A senha precisa ser igual !');
     }
   }
-
   function seePassword() {
     setShowPassword(!showPassword);
   }
-
   return (
     <div className={`${styles.App} ${styles.Home}`}>
       <div className={styles.container}>
         <div className={styles.title}>
           <CoffeeIcon fontSize="large" />
-          <h1>Entre</h1>
+          <h1>Cadastre-se</h1>
         </div>
         <Box
           component="form"
@@ -59,7 +38,6 @@ function Home() {
           className={styles.boxForm}
         >
           <TextField
-            value={email}
             id="email"
             label="Email"
             variant="outlined"
@@ -72,17 +50,23 @@ function Home() {
             variant="outlined"
             onChange={(e) => setSenha(e.target.value)}
           />
+          <TextField
+            id="password-confirm"
+            label="Confirmar Senha"
+            type={showPassword ? 'text' : 'Password'}
+            variant="outlined"
+            onChange={(e) => setSenhaConfirm(e.target.value)}
+          />
 
           <FormGroup>
             <FormControlLabel
               control={<Checkbox onClick={seePassword} />}
               label="Ver senha ?"
             />
-            <Link to={'cadastrar'}>Cadastrar-se</Link>
           </FormGroup>
 
           <Button type="submit" variant="contained">
-            Entrar
+            Cadastrar
           </Button>
         </Box>
       </div>
@@ -90,4 +74,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default Cadastro;

@@ -78,6 +78,16 @@ export default function ListaControle() {
         )[0]
       : null;
 
+  const datasRepetidas = lista.reduce((acc, compra) => {
+    acc[compra.data_compra] = (acc[compra.data_compra] || 0) + 1;
+    return acc;
+  }, {});
+
+  // Filtra apenas as compras que têm datas repetidas
+  const comprasComDatasRepetidas = lista.filter(
+    (lista) => datasRepetidas[lista.data_compra] > 1,
+  );
+
   const theme = createTheme({
     components: {
       MuiDataGrid: {
@@ -100,7 +110,9 @@ export default function ListaControle() {
   }
   return (
     <div className={styles.tableCafe}>
-      <Card sx={{ width: { xs: 200, md: 400 }, height: 230, marginBottom: 5 }}>
+      <Card
+        sx={{ width: { xs: 200, md: 400 }, height: 'auto', marginBottom: 5 }}
+      >
         <CardContent>
           {compraMaisRecente
             ? formatDistanceToNow(compraMaisRecente.data_compra, {
