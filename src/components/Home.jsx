@@ -11,6 +11,7 @@ import TextField from '@mui/material/TextField';
 import { toast } from 'sonner';
 import CoffeeIcon from '@mui/icons-material/Coffee';
 import { Link } from 'react-router-dom';
+import 'animate.css';
 
 function Home() {
   const { handleLogin, handleAutoLogin } = useContext(UserContext);
@@ -46,7 +47,9 @@ function Home() {
   }
 
   return (
-    <div className={`${styles.App} ${styles.Home}`}>
+    <div
+      className={`${styles.App} ${styles.Home} animate__animated animate__fadeInLeft`}
+    >
       <div className={styles.container}>
         <div className={styles.title}>
           <CoffeeIcon fontSize="large" />
@@ -78,7 +81,9 @@ function Home() {
               control={<Checkbox onClick={seePassword} />}
               label="Ver senha ?"
             />
-            <Link to={'cadastrar'}>Cadastrar-se</Link>
+            <Link to={'cadastrar'} className={styles.cadastrarse}>
+              Cadastrar-se
+            </Link>
           </FormGroup>
 
           <Button type="submit" variant="contained">
