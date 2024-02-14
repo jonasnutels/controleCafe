@@ -94,7 +94,10 @@ export const UserStorage = ({ children }) => {
         },
       });
       if (error) toast.error(error.message);
-      if (data.user) toast.success('Cadastrado com sucesso!');
+      if (data.user) {
+        toast.success('Confirme seu email para continuar !');
+        navigate('/');
+      }
     }
   }
 
