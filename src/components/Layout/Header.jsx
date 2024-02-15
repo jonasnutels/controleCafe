@@ -15,16 +15,17 @@ import AdbIcon from '@mui/icons-material/Adb';
 import { UserContext } from '../../userContext';
 import { toast } from 'sonner';
 import CoffeeIcon from '@mui/icons-material/Coffee';
-import { Link, Navigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Header() {
+  const navigate = useNavigate();
   const { autenticado, handleLogout, usuario } = React.useContext(UserContext);
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const settings = [
     {
       nome: 'Mudar Senha',
-      onClick: () => toast.warning('Função disponível em breve'),
+      onClick: () => navigate('/change-password'),
     },
     { nome: 'Logout', onClick: handleLogout },
   ];

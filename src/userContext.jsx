@@ -2,6 +2,7 @@ import React, { useState, createContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from './authSupabase/__auth';
 import { toast } from 'sonner';
+import translate from 'google-translate-api-browser';
 
 export const UserContext = createContext();
 
@@ -131,6 +132,52 @@ export const UserStorage = ({ children }) => {
     }
   }
 
+  async function resetPassword() {
+    try {
+      const { data, error } = await supabase.auth.resetPasswordForEmail(
+        'user@email.com',
+      );
+
+      if (error) {
+        console.error('Erro ao redefinir a senha:', error.message);
+      } else {
+        console.log('Email de redefinição de senha enviado com sucesso:', data);
+      }
+    } catch (error) {
+      console.error('Erro inesperado:', error.message);
+    }
+  }
+  useEffect(() => {
+    resetPassword();
+
+    const handlePasswordRecovery = async (event, session) => {
+      if (event === 'PASSWORD_RECOVERY') {
+        const newPassword = prompt('Qual será a sua nova senha?');
+
+        try {
+          const { data, error } = await supabase.auth.api.updateUser({
+            password: newPassword,
+          });
+
+          if (data) {
+            alert('Senha atualizada com sucesso!');
+          }
+
+          if (error) {
+            alert('Houve um erro ao atualizar a senha.');
+            console.error('Erro ao atualizar a senha:', error.message);
+          }
+        } catch (error) {
+          console.error('Erro inesperado:', error.message);
+        }
+      }
+    };
+
+    supabase.auth.onAuthStateChange(handlePasswordRecovery);
+
+    // Limpa o event listener quando o componente é desmontado
+    return () => supabase.auth.removeAuthListener(handlePasswordRecovery);
+  }, []);
   return (
     <UserContext.Provider
       value={{
@@ -144,6 +191,7 @@ export const UserStorage = ({ children }) => {
         handleRegistrarCompra,
         handleAutoLogin,
         cadastrarComEmail,
+        resetPassword,
       }}
     >
       {children}

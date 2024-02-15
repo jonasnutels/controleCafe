@@ -11,6 +11,7 @@ import Footer from './components/Layout/Footer';
 import Header from './components/Layout/Header';
 import { Container } from '@mui/material';
 import RegistroCompra from './components/Dashboard/RegistroCompra';
+import MudarSenha from './components/Pages/MudarSenha';
 export default function App() {
   return (
     <div className="App">
@@ -22,6 +23,14 @@ export default function App() {
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/cadastrar" element={<Cadastro />} />
+                <Route
+                  path="/change-password"
+                  element={
+                    <ProtectedRoute>
+                      <MudarSenha />
+                    </ProtectedRoute>
+                  }
+                />
                 <Route
                   path="lista"
                   element={
