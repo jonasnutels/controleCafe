@@ -1,3 +1,8 @@
 .tableCafe {
   margin-top: 2rem;
 }
+
+.cardsContainer {
+  display: flex;
+  gap: 3rem;
+}

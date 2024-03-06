@@ -87,7 +87,12 @@ export default function ListaControle() {
   const comprasComDatasRepetidas = lista.filter(
     (lista) => datasRepetidas[lista.data_compra] > 1,
   );
-
+  const compraMaisAntiga =
+    lista.length > 0
+      ? [...lista].sort(
+          (a, b) => new Date(a.data_compra) - new Date(b.data_compra),
+        )[0]
+      : null;
   const theme = createTheme({
     components: {
       MuiDataGrid: {
@@ -110,36 +115,61 @@ export default function ListaControle() {
   }
   return (
     <div className={styles.tableCafe}>
-      <Card
-        sx={{ width: { xs: 200, md: 400 }, height: 'auto', marginBottom: 5 }}
-      >
-        <CardContent>
-          {compraMaisRecente
-            ? formatDistanceToNow(compraMaisRecente.data_compra, {
-                locale: ptBR,
-                addSuffix: true,
-              })
-            : null}
-          <Typography variant="h6" gutterBottom fontWeight={600}>
-            Último comprador:
-          </Typography>
-          <Typography variant="h7" gutterBottom>
-            {compraMaisRecente && (
-              <>
-                <p>Nome: {compraMaisRecente.nome_comprador}</p>
-                <p>
-                  Data:{' '}
-                  {format(
-                    parseISO(compraMaisRecente.data_compra),
-                    'dd/MM/yyyy',
-                  )}
-                </p>
-                <p>Quantidade: {compraMaisRecente.quantidade_kg}</p>
-              </>
-            )}
-          </Typography>
-        </CardContent>
-      </Card>
+      <div className={styles.cardsContainer}>
+        <Card
+          sx={{ width: { xs: 200, md: 400 }, height: 'auto', marginBottom: 5 }}
+        >
+          <CardContent>
+            {compraMaisRecente
+              ? formatDistanceToNow(compraMaisRecente.data_compra, {
+                  locale: ptBR,
+                  addSuffix: true,
+                })
+              : null}
+            <Typography variant="h6" gutterBottom fontWeight={600}>
+              Último comprador:
+            </Typography>
+            <Typography variant="h7" gutterBottom>
+              {compraMaisRecente && (
+                <>
+                  <p>Nome: {compraMaisRecente.nome_comprador}</p>
+                  <p>
+                    Data:{' '}
+                    {format(
+                      parseISO(compraMaisRecente.data_compra),
+                      'dd/MM/yyyy',
+                    )}
+                  </p>
+                  <p>Quantidade: {compraMaisRecente.quantidade_kg}</p>
+                </>
+              )}
+            </Typography>
+          </CardContent>
+        </Card>
+        <Card
+          sx={{ width: { xs: 200, md: 400 }, height: 'auto', marginBottom: 5 }}
+        >
+          <CardContent>
+            <Typography variant="h6" gutterBottom fontWeight={600}>
+              Próximo Comprador
+            </Typography>
+            <Typography variant="h7" gutterBottom>
+              {compraMaisAntiga && (
+                <>
+                  <p>Nome: {compraMaisAntiga.nome_comprador}</p>
+                  <p>
+                    Última Compra:{' '}
+                    {format(
+                      parseISO(compraMaisAntiga.data_compra),
+                      'dd/MM/yyyy',
+                    )}
+                  </p>
+                </>
+              )}
+            </Typography>
+          </CardContent>
+        </Card>
+      </div>
 
       <Typography variant="h4" component="h4">
         Últimas compras
