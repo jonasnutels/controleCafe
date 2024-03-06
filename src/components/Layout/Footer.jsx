@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 function Footer() {
   const anoAtual = new Date().getFullYear();
   return (
-    <AppBar position="static">
+    <AppBar position="static" style={{ marginTop: '3rem' }}>
       <Container maxWidth="xl">
         <Toolbar className={styles.footerContainer}>
           <Typography variant="h6" component="h6">

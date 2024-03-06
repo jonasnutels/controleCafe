@@ -26,6 +26,7 @@ function Header() {
     {
       nome: 'Mudar Senha',
       onClick: () => navigate('/change-password'),
+      disabled: true,
     },
     { nome: 'Logout', onClick: handleLogout },
   ];
@@ -167,6 +168,7 @@ function Header() {
                       setting.onClick();
                       handleCloseUserMenu();
                     }}
+                    disabled={setting.disabled}
                   >
                     <Typography textAlign="center">{setting.nome}</Typography>
                   </MenuItem>
