@@ -151,7 +151,7 @@ export default function ListaControle() {
             </Typography>
           </CardContent>
         </Card>
-        <Card
+        {/* <Card
           sx={{
             width: { xs: '100%', md: 400 },
             height: 'auto',
@@ -177,7 +177,7 @@ export default function ListaControle() {
               )}
             </Typography>
           </CardContent>
-        </Card>
+        </Card> */}
 
         <Card
           sx={{
