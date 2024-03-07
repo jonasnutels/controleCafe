@@ -6,6 +6,15 @@
   display: flex;
   gap: 3rem;
 }
+
+.list li,
+ul {
+  display: flex;
+  text-align: justify;
+  padding: 10px;
+  flex-wrap: wrap;
+}
+
 @media screen and (max-width: 767px) {
   .cardsContainer {
     flex-direction: column;

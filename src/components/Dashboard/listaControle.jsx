@@ -18,13 +18,14 @@ import { UserContext } from '../../userContext';
 import { format, parseISO } from 'date-fns';
 import { formatDistanceToNow } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
+import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
 const columns = [
-  {
-    field: 'id',
-    headerName: 'ID',
-    width: 70,
-    headerClassName: 'super-app-theme--header',
-  },
+  // {
+  //   field: 'id',
+  //   headerName: 'ID',
+  //   width: 70,
+  //   headerClassName: 'super-app-theme--header',
+  // },
   { field: 'nome_comprador', headerName: 'Nome', width: 250 },
 
   { field: 'tipo_cafe', headerName: 'Tipo do Café', width: 150 },
@@ -160,21 +161,16 @@ export default function ListaControle() {
         >
           <CardContent>
             <Typography variant="h6" gutterBottom fontWeight={600}>
-              Próximo Comprador
+              Ordem de compra
             </Typography>
             <Typography variant="h7" gutterBottom>
-              {compraMaisAntiga && (
+              {lista.map((item) => (
                 <>
-                  <p>Nome: {compraMaisAntiga.nome_comprador}</p>
-                  <p>
-                    Última Compra:{' '}
-                    {format(
-                      parseISO(compraMaisAntiga.data_compra),
-                      'dd/MM/yyyy',
-                    )}
-                  </p>
+                  <ul>
+                    <li>{item.nome_comprador}</li>
+                  </ul>
                 </>
-              )}
+              ))}
             </Typography>
           </CardContent>
         </Card> */}
@@ -191,12 +187,28 @@ export default function ListaControle() {
               Pessoas que não constam no sistema
             </Typography>
             <Typography variant="h7" gutterBottom color={'red'}>
-              <ul>
-                <li>Anderson</li>
-                <li>Manoel</li>
-                <li>Mauro</li>
-                <li>Wendel</li>
-                <li>Silvestre</li>
+              <ul className={styles.list}>
+                <li>
+                  <span>Anderson</span>
+                  <RemoveShoppingCartIcon />
+                </li>
+
+                <li>
+                  <span>Manoel</span>
+                  <RemoveShoppingCartIcon />
+                </li>
+                <li>
+                  Mauro
+                  <RemoveShoppingCartIcon />
+                </li>
+                <li>
+                  Wendel
+                  <RemoveShoppingCartIcon />
+                </li>
+                <li>
+                  Silvestre
+                  <RemoveShoppingCartIcon />
+                </li>
               </ul>
             </Typography>
           </CardContent>
