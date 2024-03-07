@@ -114,7 +114,70 @@ export default function ListaControle() {
       </GridToolbarContainer>
     );
   }
+  const CompraCard = ({
+    compraMaisRecente,
+    adicionarCompraNova,
+    removerProximoDaFila,
+    filaCompras,
+  }) => {
+    return (
+      <Card
+        sx={{
+          width: { xs: '100%', md: 400 },
+          height: 'auto',
+          marginBottom: 5,
+        }}
+      >
+        <CardContent>
+          {compraMaisRecente
+            ? formatDistanceToNow(compraMaisRecente.data_compra, {
+                locale: ptBR,
+                addSuffix: true,
+              })
+            : null}
+          <Typography variant="h6" gutterBottom fontWeight={600}>
+            Último comprador:
+          </Typography>
+          <Typography variant="h7" gutterBottom>
+            {compraMaisRecente && (
+              <>
+                <p>Nome: {compraMaisRecente.nome_comprador}</p>
+                <p>
+                  Data:{' '}
+                  {format(
+                    parseISO(compraMaisRecente.data_compra),
+                    'dd/MM/yyyy',
+                  )}
+                </p>
+                <p>Quantidade: {compraMaisRecente.quantidade_kg}</p>
+              </>
+            )}
+          </Typography>
 
+          {/* Lista de compradores na fila */}
+          <Typography variant="h6" gutterBottom fontWeight={600}>
+            Fila de Compradores:
+          </Typography>
+          <ul>
+            {filaCompras.map((comprador, index) => (
+              <li key={index}>{comprador}</li>
+            ))}
+          </ul>
+
+          {/* Botões para adicionar e remover da fila */}
+          <Button
+            variant="contained"
+            onClick={() => adicionarCompraNova(compraMaisRecente)}
+          >
+            Adicionar à Fila
+          </Button>
+          <Button variant="contained" onClick={() => removerProximoDaFila()}>
+            Remover Próximo da Fila
+          </Button>
+        </CardContent>
+      </Card>
+    );
+  };
   return (
     <div className={styles.tableCafe}>
       <div className={styles.cardsContainer}>

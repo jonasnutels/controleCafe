@@ -11,7 +11,7 @@ export const UserStorage = ({ children }) => {
 
   const [autenticado, setAutenticado] = useState(false);
   const [lista, setLista] = useState([]);
-
+  const [filaCompras, setFilaCompras] = useState([]);
   async function handleLogin(email, senha) {
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
