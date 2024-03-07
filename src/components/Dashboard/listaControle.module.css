@@ -6,3 +6,9 @@
   display: flex;
   gap: 3rem;
 }
+@media screen and (max-width: 767px) {
+  .cardsContainer {
+    flex-direction: column;
+    gap: 0;
+  }
+}

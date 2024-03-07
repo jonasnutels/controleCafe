@@ -113,11 +113,16 @@ export default function ListaControle() {
       </GridToolbarContainer>
     );
   }
+
   return (
     <div className={styles.tableCafe}>
       <div className={styles.cardsContainer}>
         <Card
-          sx={{ width: { xs: 200, md: 400 }, height: 'auto', marginBottom: 5 }}
+          sx={{
+            width: { xs: '100%', md: 400 },
+            height: 'auto',
+            marginBottom: 5,
+          }}
         >
           <CardContent>
             {compraMaisRecente
@@ -147,7 +152,11 @@ export default function ListaControle() {
           </CardContent>
         </Card>
         <Card
-          sx={{ width: { xs: 200, md: 400 }, height: 'auto', marginBottom: 5 }}
+          sx={{
+            width: { xs: '100%', md: 400 },
+            height: 'auto',
+            marginBottom: 5,
+          }}
         >
           <CardContent>
             <Typography variant="h6" gutterBottom fontWeight={600}>
@@ -166,6 +175,29 @@ export default function ListaControle() {
                   </p>
                 </>
               )}
+            </Typography>
+          </CardContent>
+        </Card>
+
+        <Card
+          sx={{
+            width: { xs: '100%', md: 400 },
+            height: 'auto',
+            marginBottom: 5,
+          }}
+        >
+          <CardContent>
+            <Typography variant="h6" gutterBottom fontWeight={600}>
+              Pessoas que não constam no sistema
+            </Typography>
+            <Typography variant="h7" gutterBottom color={'red'}>
+              <ul>
+                <li>Anderson</li>
+                <li>Manoel</li>
+                <li>Mauro</li>
+                <li>Wendel</li>
+                <li>Silvestre</li>
+              </ul>
             </Typography>
           </CardContent>
         </Card>
