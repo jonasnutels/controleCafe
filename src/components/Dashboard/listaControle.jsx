@@ -251,10 +251,7 @@ export default function ListaControle() {
             </Typography>
             <Typography variant="h7" gutterBottom color={'red'}>
               <ul className={styles.list}>
-                <li>
-                  <span>Anderson</span>
-                  <RemoveShoppingCartIcon />
-                </li>
+              
 
                 <li>
                   <span>Manoel</span>
