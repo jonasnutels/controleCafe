@@ -257,10 +257,7 @@ export default function ListaControle() {
                   <span>Manoel</span>
                   <RemoveShoppingCartIcon />
                 </li>
-                <li>
-                  Mauro
-                  <RemoveShoppingCartIcon />
-                </li>
+              
                 <li>
                   Wendel
                   <RemoveShoppingCartIcon />
