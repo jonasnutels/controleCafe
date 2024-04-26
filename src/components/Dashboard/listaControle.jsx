@@ -143,17 +143,19 @@ export default function ListaControle() {
             marginBottom: 5,
           }}
         >
-          <Typography variant="h6" gutterBottom fontWeight={600}>
-            Próximo Comprador:
-          </Typography>
-          {listaOrdenada.map((pessoa, index) => (
-            <div className={styles.lista} key={index}>
-              <li>
-                {pessoa.nome} -
-                {format(new Date(pessoa.data_compra), 'dd/MM/yyyy')}
-              </li>
-            </div>
-          ))}
+          <CardContent>
+            <Typography variant="h6" gutterBottom fontWeight={600}>
+              Próximo Comprador:
+            </Typography>
+            {listaOrdenada.map((pessoa, index) => (
+              <div className={styles.lista} key={index}>
+                <li>
+                  {pessoa.nome} -
+                  {format(new Date(pessoa.data_compra), 'dd/MM/yyyy')}
+                </li>
+              </div>
+            ))}
+          </CardContent>
         </Card>
       </div>
 
