@@ -9,8 +9,6 @@ import {
   Typography,
   Card,
   CardContent,
-  CardActions,
-  Button,
   ThemeProvider,
   createTheme,
 } from '@mui/material';
@@ -18,18 +16,19 @@ import { UserContext } from '../../userContext';
 import { format, parseISO } from 'date-fns';
 import { formatDistanceToNow } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
-import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
 const columns = [
-  // {
-  //   field: 'id',
-  //   headerName: 'ID',
-  //   width: 70,
-  //   headerClassName: 'super-app-theme--header',
-  // },
   { field: 'nome_comprador', headerName: 'Nome', width: 250 },
 
   { field: 'tipo_cafe', headerName: 'Tipo do Café', width: 150 },
-  { field: 'valor_total', headerName: 'Valor Total', width: 100 },
+  {
+    field: 'data_compra',
+    headerName: 'Data da Compra',
+    renderCell: (params) => {
+      const dataFormatada = format(new Date(params.value), 'dd/MM/yyyy');
+      return <span>{dataFormatada}</span>;
+    },
+  },
+
   {
     field: 'quantidade_kg',
     headerName: 'Kg',
@@ -47,15 +46,7 @@ const columns = [
       return <span>{dataFormatada}</span>;
     },
   },
-  {
-    field: 'data_compra',
-    headerName: 'Data da Compra',
-    width: 162,
-    renderCell: (params) => {
-      const dataFormatada = format(new Date(params.value), 'dd/MM/yyyy');
-      return <span>{dataFormatada}</span>;
-    },
-  },
+
   {
     field: 'email_registros',
     headerName: 'Quem Registrou',
@@ -68,7 +59,8 @@ const columns = [
   },
 ];
 export default function ListaControle() {
-  const { lista, getLista } = React.useContext(UserContext);
+  const { lista, getLista, getListaUsuarios, listaUsuarios } =
+    React.useContext(UserContext);
   React.useEffect(() => {
     getLista();
   }, []);
@@ -79,21 +71,6 @@ export default function ListaControle() {
         )[0]
       : null;
 
-  const datasRepetidas = lista.reduce((acc, compra) => {
-    acc[compra.data_compra] = (acc[compra.data_compra] || 0) + 1;
-    return acc;
-  }, {});
-
-  // Filtra apenas as compras que têm datas repetidas
-  const comprasComDatasRepetidas = lista.filter(
-    (lista) => datasRepetidas[lista.data_compra] > 1,
-  );
-  const compraMaisAntiga =
-    lista.length > 0
-      ? [...lista].sort(
-          (a, b) => new Date(a.data_compra) - new Date(b.data_compra),
-        )[0]
-      : null;
   const theme = createTheme({
     components: {
       MuiDataGrid: {
@@ -114,70 +91,13 @@ export default function ListaControle() {
       </GridToolbarContainer>
     );
   }
-  const CompraCard = ({
-    compraMaisRecente,
-    adicionarCompraNova,
-    removerProximoDaFila,
-    filaCompras,
-  }) => {
-    return (
-      <Card
-        sx={{
-          width: { xs: '100%', md: 400 },
-          height: 'auto',
-          marginBottom: 5,
-        }}
-      >
-        <CardContent>
-          {compraMaisRecente
-            ? formatDistanceToNow(compraMaisRecente.data_compra, {
-                locale: ptBR,
-                addSuffix: true,
-              })
-            : null}
-          <Typography variant="h6" gutterBottom fontWeight={600}>
-            Último comprador:
-          </Typography>
-          <Typography variant="h7" gutterBottom>
-            {compraMaisRecente && (
-              <>
-                <p>Nome: {compraMaisRecente.nome_comprador}</p>
-                <p>
-                  Data:{' '}
-                  {format(
-                    parseISO(compraMaisRecente.data_compra),
-                    'dd/MM/yyyy',
-                  )}
-                </p>
-                <p>Quantidade: {compraMaisRecente.quantidade_kg}</p>
-              </>
-            )}
-          </Typography>
-
-          {/* Lista de compradores na fila */}
-          <Typography variant="h6" gutterBottom fontWeight={600}>
-            Fila de Compradores:
-          </Typography>
-          <ul>
-            {filaCompras.map((comprador, index) => (
-              <li key={index}>{comprador}</li>
-            ))}
-          </ul>
-
-          {/* Botões para adicionar e remover da fila */}
-          <Button
-            variant="contained"
-            onClick={() => adicionarCompraNova(compraMaisRecente)}
-          >
-            Adicionar à Fila
-          </Button>
-          <Button variant="contained" onClick={() => removerProximoDaFila()}>
-            Remover Próximo da Fila
-          </Button>
-        </CardContent>
-      </Card>
-    );
-  };
+  const listaOrdenada = [...listaUsuarios];
+  listaOrdenada.sort(
+    (a, b) => new Date(a.data_compra) - new Date(b.data_compra),
+  );
+  React.useEffect(() => {
+    getListaUsuarios();
+  }, []);
   return (
     <div className={styles.tableCafe}>
       <div className={styles.cardsContainer}>
@@ -196,7 +116,7 @@ export default function ListaControle() {
                 })
               : null}
             <Typography variant="h6" gutterBottom fontWeight={600}>
-              Último comprador:
+              Último Comprador:
             </Typography>
             <Typography variant="h7" gutterBottom>
               {compraMaisRecente && (
@@ -215,28 +135,6 @@ export default function ListaControle() {
             </Typography>
           </CardContent>
         </Card>
-        {/* <Card
-          sx={{
-            width: { xs: '100%', md: 400 },
-            height: 'auto',
-            marginBottom: 5,
-          }}
-        >
-          <CardContent>
-            <Typography variant="h6" gutterBottom fontWeight={600}>
-              Ordem de compra
-            </Typography>
-            <Typography variant="h7" gutterBottom>
-              {lista.map((item) => (
-                <>
-                  <ul>
-                    <li>{item.nome_comprador}</li>
-                  </ul>
-                </>
-              ))}
-            </Typography>
-          </CardContent>
-        </Card> */}
 
         <Card
           sx={{
@@ -245,30 +143,17 @@ export default function ListaControle() {
             marginBottom: 5,
           }}
         >
-          <CardContent>
-            <Typography variant="h6" gutterBottom fontWeight={600}>
-              Pessoas que não constam no sistema
-            </Typography>
-            <Typography variant="h7" gutterBottom color={'red'}>
-              <ul className={styles.list}>
-              
-
-                <li>
-                  <span>Manoel</span>
-                  <RemoveShoppingCartIcon />
-                </li>
-              
-                <li>
-                  Wendel
-                  <RemoveShoppingCartIcon />
-                </li>
-                <li>
-                  Silvestre
-                  <RemoveShoppingCartIcon />
-                </li>
-              </ul>
-            </Typography>
-          </CardContent>
+          <Typography variant="h6" gutterBottom fontWeight={600}>
+            Próximo Comprador:
+          </Typography>
+          {listaOrdenada.map((pessoa, index) => (
+            <div className={styles.lista} key={index}>
+              <li>
+                {pessoa.nome} -
+                {format(new Date(pessoa.data_compra), 'dd/MM/yyyy')}
+              </li>
+            </div>
+          ))}
         </Card>
       </div>
 
@@ -281,10 +166,10 @@ export default function ListaControle() {
           columns={columns}
           initialState={{
             pagination: {
-              paginationModel: { page: 0, pageSize: 10 },
+              paginationModel: { page: 0, pageSize: 100 },
             },
           }}
-          pageSizeOptions={[5, 10, 20]}
+          pageSizeOptions={[5, 10, 20, 100]}
           slots={{
             toolbar: CustomToolbar,
           }}

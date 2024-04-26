@@ -1,4 +1,4 @@
-import React, { useState, createContext, useEffect } from 'react';
+import { useState, createContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from './authSupabase/__auth';
 import { toast } from 'sonner';
@@ -11,7 +11,7 @@ export const UserStorage = ({ children }) => {
 
   const [autenticado, setAutenticado] = useState(false);
   const [lista, setLista] = useState([]);
-  const [filaCompras, setFilaCompras] = useState([]);
+  const [listaUsuarios, setListaUsuarios] = useState([]);
   async function handleLogin(email, senha) {
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
@@ -56,14 +56,19 @@ export const UserStorage = ({ children }) => {
     const { data } = await supabase.from('controle_cafe').select();
     setLista(data);
   }
+
+  async function getListaUsuarios() {
+    const { data } = await supabase.from('fila_cafe').select();
+    setListaUsuarios(data);
+  }
   async function fetchUserData() {
     try {
       const refresh_token = window.localStorage.getItem('refresh_token');
 
-      const { data, error } = await supabase.auth.refreshSession({
+      const { data } = await supabase.auth.refreshSession({
         refresh_token,
       });
-      const { session, user } = data;
+      const { user } = data;
       if (user) {
         setUsuario(user);
         setAutenticado(true);
@@ -73,6 +78,7 @@ export const UserStorage = ({ children }) => {
       console.error('Error fetching user data:', error.message);
     }
   }
+
   function handleLogout() {
     toast.info('Saindo ... ');
     setTimeout(() => {
@@ -101,7 +107,7 @@ export const UserStorage = ({ children }) => {
 
   async function handleRegistrarCompra(dadosCompra) {
     try {
-      const { data, error } = await supabase.from('controle_cafe').upsert([
+      const { error } = await supabase.from('controle_cafe').upsert([
         {
           nome_comprador: dadosCompra.nomeComprador,
           data_compra: dadosCompra.dataDaCompra,
@@ -127,6 +133,17 @@ export const UserStorage = ({ children }) => {
     } catch (error) {
       console.error('Erro ao registrar compra:', error);
     }
+  }
+
+  async function handleRegistrarNomeNaFila(dadosCompra, id_auth) {
+    const { error } = await supabase
+      .from('fila_cafe')
+      .update({
+        data_compra: dadosCompra,
+      })
+      .eq('id_auth', id_auth);
+
+    if (error) return console.log(error);
   }
 
   async function resetPassword() {
@@ -189,6 +206,9 @@ export const UserStorage = ({ children }) => {
         handleAutoLogin,
         cadastrarComEmail,
         resetPassword,
+        getListaUsuarios,
+        listaUsuarios,
+        handleRegistrarNomeNaFila,
       }}
     >
       {children}

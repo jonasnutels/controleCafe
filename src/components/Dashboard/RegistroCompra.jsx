@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import { useState, useContext } from 'react';
 import {
   TextField,
   Button,
@@ -9,7 +9,8 @@ import {
 import { UserContext } from '../../userContext';
 
 const RegistroCompra = () => {
-  const { handleRegistrarCompra, usuario } = useContext(UserContext);
+  const { handleRegistrarCompra, usuario, handleRegistrarNomeNaFila } =
+    useContext(UserContext);
   const [dadosCompra, setDadosCompra] = useState({
     nomeComprador: '',
     dataDaCompra: '',
@@ -31,6 +32,7 @@ const RegistroCompra = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await handleRegistrarCompra(dadosCompra);
+    await handleRegistrarNomeNaFila(dadosCompra.dataDaCompra, usuario.id);
   };
 
   return (

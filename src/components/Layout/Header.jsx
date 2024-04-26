@@ -11,9 +11,7 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
 import { UserContext } from '../../userContext';
-import { toast } from 'sonner';
 import CoffeeIcon from '@mui/icons-material/Coffee';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -44,7 +42,6 @@ function Header() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
@@ -118,7 +115,7 @@ function Header() {
                   fontWeight: '600',
                 }}
               >
-                Olá, {usuario.email.split('@')[0]}
+                Olá, {usuario.email.split('@')[0]} - {usuario.id}
               </Button>
               <MenuItem onClick={handleCloseNavMenu}>
                 <Typography
