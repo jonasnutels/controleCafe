@@ -115,7 +115,7 @@ function Header() {
                   fontWeight: '600',
                 }}
               >
-                Olá, {usuario.email.split('@')[0]} - {usuario.id}
+                Olá, {usuario.email.split('@')[0]}
               </Button>
               <MenuItem onClick={handleCloseNavMenu}>
                 <Typography
