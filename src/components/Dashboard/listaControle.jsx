@@ -149,8 +149,8 @@ export default function ListaControle() {
             </Typography>
             {listaOrdenada.map((pessoa, index) => (
               <div className={styles.lista} key={index}>
-                <li>
-                  {pessoa.nome} -
+                <li style={{ color: index + 1 === 1 ? 'red' : 'black' }}>
+                  {index + 1} - {pessoa.nome} -
                   {format(new Date(pessoa.data_compra), 'dd/MM/yyyy')}
                 </li>
               </div>
