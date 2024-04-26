@@ -16,6 +16,7 @@ import { UserContext } from '../../userContext';
 import { format, parseISO } from 'date-fns';
 import { formatDistanceToNow } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
+
 const columns = [
   { field: 'nome_comprador', headerName: 'Nome', width: 250 },
 
@@ -149,9 +150,18 @@ export default function ListaControle() {
             </Typography>
             {listaOrdenada.map((pessoa, index) => (
               <div className={styles.lista} key={index}>
-                <li style={{ color: index + 1 === 1 ? 'red' : 'black' }}>
+                <li
+                  style={{
+                    color: index + 1 === 1 ? 'red' : 'black',
+                    textAlign: 'justify',
+                  }}
+                >
                   {index + 1} - {pessoa.nome} -
-                  {format(new Date(pessoa.data_compra), 'dd/MM/yyyy')}
+                  {format(new Date(pessoa.data_compra), 'dd/MM/yyyy')} -
+                  {formatDistanceToNow(pessoa.data_compra, {
+                    locale: ptBR,
+                    addSuffix: true,
+                  })}
                 </li>
               </div>
             ))}
